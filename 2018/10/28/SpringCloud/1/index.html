@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>第一章、spring cloud服务注册中心eureka---概念 | Hexo</title>
+  
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" href="https://xaoxuu.com/assets/img/favicon.ico">
+  <link rel="alternate" href="/atom.xml" title="Hexo">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="shortcut icon" href="https://xaoxuu.com/assets/img/favicon.ico" />
+  <link rel="icon" href="https://xaoxuu.com/assets/img/favicon.ico" />
+  
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono" rel="stylesheet">
+  
+  <!-- <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/meting@1.1.0/dist/Meting.min.js"></script>
+
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+  
+</head>
+
+<body>
+    <div id="loading-bar-wrapper">
+  <div id="loading-bar" class="pure"></div>
+</div>
+
+    <script>setLoadingBarProgress(20)</script>
+    <header class="l_header pure">
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+			<a class="logo flat-box" href='/' >Hexo</a>
+				<div class='menu'>
+					<ul class='h-list'>
+            
+    					
+    						<li>
+									<a id="not_current"
+									 class="nav flat-box" href="https://xaoxuu.com/">
+										<i class='fas fa-home fa-fw'></i>&nbsp;主页1
+									</a>
+  							</li>
+        			
+    						<li>
+									<a id="not_current"
+									 class="nav flat-box" href="https://xaoxuu.com/projects/">
+										<i class='fas fa-flask fa-fw'></i>&nbsp;项目2
+									</a>
+  							</li>
+        			
+    						<li>
+									<a id="not_current"
+									 class="nav flat-box" href="/">
+										<i class='fas fa-rss fa-fw'></i>&nbsp;博客3
+									</a>
+  							</li>
+        			
+    						<li>
+									<a id="not_current"
+									 class="nav flat-box" href="/archives/">
+										<i class='fas fa-archive fa-fw'></i>&nbsp;归档4
+									</a>
+  							</li>
+        			
+    						<li>
+									<a id="not_current"
+									 class="nav flat-box" href="https://xaoxuu.com/about/">
+										<i class='fas fa-user fa-fw'></i>&nbsp;关于5
+									</a>
+  							</li>
+        			
+        		
+					</ul>
+					<div class='underline'></div>
+				</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon"><i class="fas fa-search fa-fw"></i></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></span></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+				<li class='s-top'><a class="fas fa-arrow-up fa-fw" href='javascript:void(0)'></a></li>
+				<li class='s-toc'><a class="fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+		<nav>
+      <ul>
+          
+              
+                  <li>
+										<a class="nav  flat-box" href="https://xaoxuu.com/">
+											<i class='fas fa-home fa-fw'></i>&nbsp;主页1
+										</a>
+                  </li>
+              
+                  <li>
+										<a class="nav  flat-box" href="https://xaoxuu.com/projects/">
+											<i class='fas fa-flask fa-fw'></i>&nbsp;项目2
+										</a>
+                  </li>
+              
+                  <li>
+										<a class="nav  flat-box" href="/">
+											<i class='fas fa-rss fa-fw'></i>&nbsp;博客3
+										</a>
+                  </li>
+              
+                  <li>
+										<a class="nav  flat-box" href="/archives/">
+											<i class='fas fa-archive fa-fw'></i>&nbsp;归档4
+										</a>
+                  </li>
+              
+                  <li>
+										<a class="nav  flat-box" href="https://xaoxuu.com/about/">
+											<i class='fas fa-user fa-fw'></i>&nbsp;关于5
+										</a>
+                  </li>
+              
+       
+      </ul>
+		</nav>
+	</aside>
+
+    <script>setLoadingBarProgress(40);</script>
+    <div class="l_body">
+    <div class='container clearfix'>
+        <div class='l_main'>
+            <article id="post-SpringCloud/1" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    <section class='meta'>
+        
+            <h1 class="title">第一章、spring cloud服务注册中心eureka---概念</h1>
+        
+        <time class="time">
+            <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+            2018-10-28
+        </time>
+        
+          <div class="browse busuanzi"><i class="fas fa-eye fa-fw" aria-hidden="true"></i>
+            <span id="busuanzi_value_page_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+          </div>
+        
+
+        
+    
+    <div class='cats'>
+        <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+        <a class="categories" href="/categories/SpringCloud/">SpringCloud</a>
+    </div>
+
+
+    </section>
+
+    <section class="article typo">
+
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="注册中心Eureka"><a href="#注册中心Eureka" class="headerlink" title="注册中心Eureka"></a><strong>注册中心Eureka</strong></h2><p>==本文中示例代码的引用版本：<br>org.springframework.boot 版本 ：2.1.0.RELEASE<br>org.springframework.cloud 版本：Greenwich.M1==<br><a href="https://gitee.com/sharps/springcloud" target="_blank" rel="external">示例代码-码云</a> <a href="https://gitee.com/sharps/springcloud" target="_blank" rel="external">https://gitee.com/sharps/springcloud</a></p>
+<h3 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h3><h4 id="服务中心"><a href="#服务中心" class="headerlink" title="服务中心"></a>服务中心</h4><a id="more"></a>
+<p>   服务中心又称注册中心，管理各种服务功能包括服务的注册、发现、熔断、负载、降级等，比如dubbo admin后台的各种功能。<br><br>有了服务中心调用关系会有什么变化，画几个简图来帮忙理解<br><br>项目A调用项目B<br><br>正常调用项目A请求项目B<br></p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">graph LR</div><div class="line">A[项目A] -- 请求 --&gt; B[项目B]</div></pre></td></tr></table></figure>
+<p>有了服务中心之后，任何一个服务都不能直接去掉用，都需要通过服务中心来调用</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">graph LR</div><div class="line">A[项目A] --&gt; C(服&lt;br/&gt;务&lt;br/&gt;中&lt;br/&gt;心) </div><div class="line">C--&gt; B[项目B]</div></pre></td></tr></table></figure>
+<p>这时候调用的步骤就会为两步：第一步，项目A首先从服务中心请求项目B服务器，然后项目B在从服务中心请求项目C服务。</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">graph LR</div><div class="line">A[项目A] --&gt; D(服&lt;br/&gt;&lt;br/&gt;务&lt;br/&gt;&lt;br/&gt;中&lt;br/&gt;&lt;br/&gt;心) </div><div class="line">D--&gt; C[项目B] </div><div class="line">B[项目B] --&gt;D</div><div class="line">D--&gt;E[项目C]</div></pre></td></tr></table></figure>
+<p>上面的项目只是两三个相互之间的简单调用，但是如果项目超过20个30个呢，画一张图来描述几十个项目之间的相互调用关系全是线条，任何其中的一个项目改动，就会牵连好几个项目跟着重启，巨麻烦而且容易出错。通过服务中心来获取服务你不需要关注你调用的项目IP地址，由几台服务器组成，每次直接去服务中心获取可以使用的服务去调用既可。<br><br>由于各种服务都注册到了服务中心，就有了去做很多高级功能条件。比如几台服务提供相同服务来做均衡负载；监控服务器调用成功率来做熔断，移除服务列表中的故障点；监控服务调用时间来对不同的服务器设置不同的权重等等。</p>
+<h4 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h4><p>按照官方介绍：</p>
+<blockquote>
+<p>Eureka is a REST (Representational State Transfer) based service that is primarily used in the AWS cloud for locating services for the purpose of load balancing and failover of middle-tier servers.</p>
+<p>Eureka 是一个基于 REST 的服务，主要在 AWS 云中使用, 定位服务来进行中间层服务器的负载均衡和故障转移。</p>
+</blockquote>
+<p>Spring Cloud 封装了 Netflix 公司开发的 Eureka 模块来实现服务注册和发现。Eureka 采用了 C-S 的设计架构。Eureka Server 作为服务注册功能的服务器，它是服务注册中心。而系统中的其他微服务，使用 Eureka 的客户端连接到 Eureka Server，并维持心跳连接。这样系统的维护人员就可以通过 Eureka Server 来监控系统中各个微服务是否正常运行。Spring Cloud 的一些其他模块（比如Zuul）就可以通过 Eureka Server 来发现系统中的其他微服务，并执行相关的逻辑。</p>
+<p>Eureka由两个组件组成：Eureka服务器和Eureka客户端。Eureka服务器用作服务注册服务器。Eureka客户端是一个java客户端，用来简化与服务器的交互、作为轮询负载均衡器，并提供服务的故障切换支持。Netflix在其生产环境中使用的是另外的客户端，它提供基于流量、资源利用率以及出错状态的加权负载均衡。</p>
+<p>用一张图来认识以下：</p>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">graph LR</div><div class="line">C[Service&lt;br/&gt;Provider] --Register/Renew/Cancel--&gt;B[Eureka&lt;br/&gt;Server] </div><div class="line">A[Service&lt;br/&gt;Consumer] --Get Registry--&gt; B[Eureka&lt;br/&gt;Server] </div><div class="line">A[Service&lt;br/&gt;Consumer] --Remote Call--&gt; C[Service&lt;br/&gt;Provider]</div></pre></td></tr></table></figure>
+<p>上图简要描述了Eureka的基本架构，由3个角色组成：<br><br>1、Eureka Server<br><br>提供服务注册和发现<br><br>2、Service Provider<br><br>服务提供方<br><br>将自身服务注册到Eureka，从而使服务消费方能够找到<br><br>3、Service Consumer<br><br>服务消费方<br><br>从Eureka获取注册服务列表，从而能够消费服务</p>
+<p>项目节点<br>01spring-cloud-eureka<br>—-&gt;0101spring-cloud-eureka   说明：服务注册中心eureka配置     <a href="https://blog.csdn.net/qq_40342015/article/details/83780583" target="_blank" rel="external">1、spring cloud服务注册中心eureka—单节点配置(第一章)</a><br>—-&gt;0102spring-cloud-eureka-two   说明：服务注册中心eureka配置     <a href="https://blog.csdn.net/qq_40342015/article/details/83780818" target="_blank" rel="external">2、spring cloud服务注册中心eureka—双节点配置(第一章)</a><br>—-&gt;0103spring-cloud-eureka-cluster   说明：服务注册中心eureka配置     <a href="https://blog.csdn.net/qq_40342015/article/details/83781230" target="_blank" rel="external">3、spring cloud服务注册中心eureka—集群配置(第一章)</a></p>
+<p><a href="https://gitee.com/sharps/springcloud" target="_blank" rel="external">示例代码-码云</a>  <a href="https://gitee.com/sharps/springcloud" target="_blank" rel="external">https://gitee.com/sharps/springcloud</a></p>
+
+        </div>
+
+        <section class='meta'>
+            <time class="time" itemprop="dateUpdated" datetime="2018-12-13T08:19:25+00:00" content="2018-12-13">
+                <i class="fas fa-pen fa-fw" aria-hidden="true"></i>
+                本文最后更新于：2018-12-13
+            </time>
+            
+                
+                <div class="tags">
+                    <i class="fas fa-tags fa-fw" aria-hidden="true"></i>
+                    <a class="tag" href="/tags/eureka/">eureka</a>, <a class="tag" href="/tags/spring-cloud/">spring cloud</a>, <a class="tag" href="/tags/spring-boot/">spring boot</a>
+                </div>
+            
+        </section>
+
+        
+            <div class="prev-next">
+                
+                    <section class="prev">
+                        <span class="art-item-left">
+                            <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一篇</h6>
+                            <h4>
+                                <a href="/2018/10/28/SpringCloud/2/" rel="prev" title="第二章、spring cloud服务注册中心eureka---服务提供与调用">
+                                  
+                                      第二章、spring cloud服务注册中心eureka---服务提供与调用
+                                  
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <i class="fas fa-tags fa-fw" aria-hidden="true"></i>
+                                    <a class="tag" href="/tags/eureka/">eureka</a>, <a class="tag" href="/tags/spring-cloud/">spring cloud</a>, <a class="tag" href="/tags/spring-boot/">spring boot</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一篇&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2018/10/28/SpringCloud/1-1/" rel="prev" title="第一章：第一节spring cloud服务注册中心eureka---单节点配置">
+                                    
+                                        第一章：第一节spring cloud服务注册中心eureka---单节点配置
+                                    
+                                </a>
+                            </h4>
+                            
+                                
+                                <h6 class="tags">
+                                    <i class="fas fa-tags fa-fw" aria-hidden="true"></i>
+                                    <a class="tag" href="/tags/eureka/">eureka</a>, <a class="tag" href="/tags/spring-cloud/">spring cloud</a>, <a class="tag" href="/tags/spring-boot/">spring boot</a>
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+
+    </section>
+
+</article>
+
+<br>
+
+<!-- 显示推荐文章和评论 -->
+
+    <article class="post white-box comments">
+        <section class="article typo">
+
+            
+                
+
+    <div class="recommended_posts">
+        <h4><i class="fas fa-bookmark fa-fw" aria-hidden="true"></i>&nbsp;你可能感兴趣的文章</h4>
+        <ul>
+            
+                <li><a href="http://yoursite.com/2018/10/29/SpringCloud/springcloud-main/">springclou学习开篇：从传统架构到微服务架构</a></li>
+            
+                <li><a href="http://yoursite.com/2018/10/28/SpringCloud/2/">第二章、spring cloud服务注册中心eureka---服务提供与调用</a></li>
+            
+                <li><a href="http://yoursite.com/2018/10/28/SpringCloud/1-1/">第一章：第一节spring cloud服务注册中心eureka---单节点配置</a></li>
+            
+                <li><a href="http://yoursite.com/2018/10/28/SpringCloud/1-2/">第一章：第二节spring cloud服务注册中心eureka—双节点配置</a></li>
+            
+        </ul>
+    </div>
+
+
+            
+
+            
+
+                <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+                
+
+                
+
+                
+            
+
+        </section>
+    </article>
+
+
+<script>
+    window.subData = {
+        title: '第一章、spring cloud服务注册中心eureka---概念',
+        tools: true
+    }
+</script>
+
+
+        </div>
+        <aside class='l_side'>
+            
+    
+        
+  <section class='m_widget author'>
+    
+      <div class='header'>
+        <img class='avatar' src='https://img.vim-cn.com/a4/87a96e2e01b1180bba1e76e190df5220378c1a.png'/>
+      </div>
+    
+    
+    
+  </section>
+
+
+    
+    
+        
+
+    
+    
+        <section class='m_widget categories'>
+    <header class='header pure'>
+        <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;分类</div>
+    </header>
+    <div class='content pure'>
+        
+            <ul class="entry">
+                
+                    <li><a class="flat-box" href="/categories/SpringCloud/"><div class='name'>SpringCloud</div><div class='badge'>11</div></a></li>
+                
+            </ul>
+        
+    </div>
+</section>
+
+    
+    
+        
+    <section class='m_widget tagcloud'>
+        <header class="header pure">
+            <div><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;标签</div>
+        </header>
+        <div class='content pure'>
+            <a href="/tags/Hystrix/" style="font-size: 14px; color: #999">Hystrix</a> <a href="/tags/SOA/" style="font-size: 14px; color: #999">SOA</a> <a href="/tags/SpringCloud/" style="font-size: 14px; color: #999">SpringCloud</a> <a href="/tags/eureka/" style="font-size: 24px; color: #555">eureka</a> <a href="/tags/feign/" style="font-size: 17.33px; color: #828282">feign</a> <a href="/tags/producer/" style="font-size: 14px; color: #999">producer</a> <a href="/tags/spring-boot/" style="font-size: 20.67px; color: #6c6c6c">spring boot</a> <a href="/tags/spring-cloud/" style="font-size: 24px; color: #555">spring cloud</a> <a href="/tags/传统架构/" style="font-size: 14px; color: #999">传统架构</a> <a href="/tags/微服务架构/" style="font-size: 14px; color: #999">微服务架构</a> <a href="/tags/服务提供者/" style="font-size: 14px; color: #999">服务提供者</a> <a href="/tags/负载均衡/" style="font-size: 14px; color: #999">负载均衡</a>
+        </div>
+    </section>
+
+
+    
+    
+        
+    <section class='m_widget toc-wrapper'>
+        <header class="header pure">
+            <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;目录</div>
+            <div class='wrapper'><a class="s-toc rightBtn" title="固定到顶部" target="_blank" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div>
+        </header>
+        <div class='content pure'>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#注册中心Eureka"><span class="toc-text">注册中心Eureka</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景介绍"><span class="toc-text">背景介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#服务中心"><span class="toc-text">服务中心</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Eureka"><span class="toc-text">Eureka</span></a></li></ol></li></ol></li></ol>
+        </div>
+    </section>
+
+
+    
+    
+        <section class='m_widget music'>
+  <header class='header pure'>
+    <div><i class="fas fa-headphones-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;最近在听</div>
+    <a class="rightBtn" target="_blank" rel="external nofollow noopener noreferrer" href="https://music.163.com/#/user/home?id=63035382"><i class="far fa-heart fa-fw"></i></a>
+  </header>
+  <div class='content pure'>
+    <div class="aplayer" data-theme="#3DC550"
+      data-mode="circulation"
+      data-server="netease"
+      data-type="playlist"
+      data-id="746319661"
+      data-volume="0.5"></div>
+  </div>
+</section>
+
+    
+    
+        <section class='m_widget links'>
+    <header class='header pure'>
+        <div><i class="fas fa-handshake fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;友链</div>
+        
+            <a class="rightBtn" title="联系博主添加友链" target="_blank" rel="external nofollow noopener noreferrer" href="mailto:me@xaoxuu.com?subject=交换友链&body=你好，我想和你交换友链，我已经将【Hexo】添加到我的博客的友链中。我的博客链接是："><i class="fas fa-plus fa-fw"></i></a>
+        
+    </header>
+    <div class='content pure'>
+        <ul class="entry" id="links">
+            
+        </ul>
+    </div>
+</section>
+
+    
+
+
+        </aside>
+        <script>setLoadingBarProgress(60);</script>
+    </div>
+    </div>
+    <footer id="footer" class="clearfix">
+    
+    <br>
+    <div>博客内容遵循 <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="licenses">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></div>
+    <div>本站使用 <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">Material X</a> 作为主题，
+		总访问量为 <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span> 次。
+    </div>
+</footer>
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+    <script>setLoadingBarProgress(80);</script>
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdn.bootcss.com/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdn.bootcss.com/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+<!-- 访问统计 -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/jquery.fitvids.js"></script>
+
+    <script>
+        var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+        var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+        var ALGOLIA_API_KEY = "";
+        var ALGOLIA_APP_ID = "";
+        var ALGOLIA_INDEX_NAME = "";
+        var AZURE_SERVICE_NAME = "";
+        var AZURE_INDEX_NAME = "";
+        var AZURE_QUERY_KEY = "";
+        var BAIDU_API_ID = "";
+        var SEARCH_SERVICE = "hexo" || "hexo";
+        var ROOT = "/"||"/";
+        if(!ROOT.endsWith('/'))ROOT += '/';
+    </script>
+
+<script src="/js/search.js"></script>
+<script src="/js/app.js"></script>
+
+
+    
+    
+    
+
+
+
+
+
+    <script>setLoadingBarProgress(100);</script>
+</body>
